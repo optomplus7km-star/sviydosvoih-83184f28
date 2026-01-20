@@ -92,6 +92,9 @@ const Contact = () => {
         <div className="max-w-2xl mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t('contact.title')}</h1>
           <p className="text-lg text-muted-foreground">{t('contact.subtitle')}</p>
+          <p className="text-sm text-muted-foreground mt-2 italic">
+            Обратитесь к администраторам для сотрудничества, идей, предложений или жалоб.
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">

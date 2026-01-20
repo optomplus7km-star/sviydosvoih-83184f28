@@ -1,7 +1,7 @@
 import { Layout } from '@/components/layout/Layout';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Network, Eye, Shield } from 'lucide-react';
+import { Network, Eye, Shield, Target, Users, AlertTriangle } from 'lucide-react';
 
 const About = () => {
   const { t } = useLanguage();
@@ -33,21 +33,74 @@ const About = () => {
         </div>
 
         {/* Manifesto */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-4xl space-y-8 mb-16">
+          {/* Mission */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">{t('about.manifesto.title')}</CardTitle>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Target className="h-5 w-5 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Миссия</CardTitle>
+              </div>
             </CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
-              <p className="text-lg leading-relaxed">{t('about.manifesto.p1')}</p>
-              <p className="text-lg leading-relaxed">{t('about.manifesto.p2')}</p>
-              <p className="text-lg leading-relaxed">{t('about.manifesto.p3')}</p>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                Выявление здоровых сил, увеличение их веса в обществе, улучшение коммуникации 
+                и кооперации между ними для формирования горизонтальной структуры власти.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Motivation */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Мотивация</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                Построение безопасной, комфортной страны со здоровыми вертикальной 
+                и горизонтальной структурами власти. Объединение элит без государственных 
+                позиций для создания устойчивого гражданского общества.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Participants */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Участники</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground leading-relaxed">
+                Лидеры общественного мнения (ЛОМы), экспертные группы и коллективы, 
+                которые приносят добавленную стоимость и берут на себя ответственность 
+                (SMART-цели).
+              </p>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-warning/10 border border-warning/20">
+                <AlertTriangle className="h-5 w-5 text-warning shrink-0 mt-0.5" />
+                <p className="text-sm text-muted-foreground">
+                  <strong className="text-foreground">Важно:</strong> В период военного положения 
+                  военные и волонтёры исключены из участия. Проект «Равный к равному» 
+                  стартует после завершения активных боевых действий.
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Values */}
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <h2 className="text-2xl font-bold mb-8">{t('about.values.title')}</h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {values.map((value) => (
@@ -66,28 +119,28 @@ const About = () => {
           </div>
         </div>
 
-        {/* Additional Info */}
-        <div className="max-w-3xl mt-16">
+        {/* How it works */}
+        <div className="max-w-4xl mt-16">
           <Card className="bg-muted/30 border-dashed">
             <CardContent className="py-8">
               <div className="prose prose-slate dark:prose-invert max-w-none">
-                <h3 className="text-lg font-semibold mb-4">Як це працює?</h3>
+                <h3 className="text-lg font-semibold mb-4">Как это работает?</h3>
                 <ol className="space-y-3 text-muted-foreground">
                   <li>
-                    <strong className="text-foreground">Реєстрація групи:</strong> Експертні групи та організації
-                    реєструються на платформі, проходячи верифікацію.
+                    <strong className="text-foreground">Регистрация группы:</strong> Экспертные группы и организации
+                    регистрируются на платформе, проходя верификацию.
                   </li>
                   <li>
-                    <strong className="text-foreground">Публікація проєктів:</strong> Групи створюють проєкти з
-                    конкретними цілями та вимогами до учасників.
+                    <strong className="text-foreground">Публикация проектов:</strong> Группы создают проекты с
+                    конкретными целями и требованиями к участникам.
                   </li>
                   <li>
-                    <strong className="text-foreground">Співпраця:</strong> Учасники подають заявки на участь,
-                    формуються команди для реалізації ініціатив.
+                    <strong className="text-foreground">Сотрудничество:</strong> Участники подают заявки на участие,
+                    формируются команды для реализации инициатив.
                   </li>
                   <li>
-                    <strong className="text-foreground">Прозорість:</strong> Всі процеси та результати відкриті для
-                    спільноти.
+                    <strong className="text-foreground">Прозрачность:</strong> Все процессы и результаты открыты для
+                    сообщества.
                   </li>
                 </ol>
               </div>

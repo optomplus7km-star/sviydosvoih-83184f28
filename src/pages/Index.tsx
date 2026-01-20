@@ -54,13 +54,13 @@ const Index = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Network className="h-4 w-4" />
-              Платформа горизонтальної влади
+              Свій до своїх
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              {t('hero.title')}
+              Платформа развития, коммуникации и кооперации
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              {t('hero.subtitle')}
+              Строим субъектное гражданское общество
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" asChild className="gap-2">
