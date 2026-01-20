@@ -61,6 +61,39 @@ export type Database = {
           },
         ]
       }
+      feedback: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          message: string
+          name: string
+          status: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message: string
+          name: string
+          status?: string
+          topic: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string
+          name?: string
+          status?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       groups: {
         Row: {
           contact_email: string | null
