@@ -2,30 +2,24 @@ import { Layout } from '@/components/layout/Layout';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Network, Eye, Shield, Target, Users, AlertTriangle } from 'lucide-react';
-
 const About = () => {
-  const { t } = useLanguage();
-
-  const values = [
-    {
-      icon: Network,
-      title: t('about.values.horizontal'),
-      description: t('about.values.horizontal.desc'),
-    },
-    {
-      icon: Eye,
-      title: t('about.values.transparency'),
-      description: t('about.values.transparency.desc'),
-    },
-    {
-      icon: Shield,
-      title: t('about.values.responsibility'),
-      description: t('about.values.responsibility.desc'),
-    },
-  ];
-
-  return (
-    <Layout>
+  const {
+    t
+  } = useLanguage();
+  const values = [{
+    icon: Network,
+    title: t('about.values.horizontal'),
+    description: t('about.values.horizontal.desc')
+  }, {
+    icon: Eye,
+    title: t('about.values.transparency'),
+    description: t('about.values.transparency.desc')
+  }, {
+    icon: Shield,
+    title: t('about.values.responsibility'),
+    description: t('about.values.responsibility.desc')
+  }];
+  return <Layout>
       <div className="civic-container py-12">
         {/* Header */}
         <div className="max-w-2xl mb-12">
@@ -45,10 +39,18 @@ const About = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">
-                Выявление здоровых сил, увеличение их веса в обществе, улучшение коммуникации 
-                и кооперации между ними для формирования горизонтальной структуры власти.
-              </p>
+              <p className="text-muted-foreground leading-relaxed">“Ми — колектив людей, що прагнуть висвітлити та з'єднати здорові сили України.
+
+Наша мета — показати, пояснити та об'єднати тих, хто діє на благо, зміцнюючи суспільство, культуру, мислення та горизонт майбутнього.
+
+Ми хочемо
+
+Створювати зв'язки між здоровими силами
+
+Ініціювати спільні дії заради формування живого та стійкого майбутнього.
+
+
+            </p>
             </CardContent>
           </Card>
 
@@ -103,8 +105,7 @@ const About = () => {
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold mb-8">{t('about.values.title')}</h2>
           <div className="grid sm:grid-cols-3 gap-6">
-            {values.map((value) => (
-              <Card key={value.title} className="text-center">
+            {values.map(value => <Card key={value.title} className="text-center">
                 <CardHeader>
                   <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                     <value.icon className="h-7 w-7 text-primary" />
@@ -114,8 +115,7 @@ const About = () => {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">{value.description}</p>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
 
@@ -148,8 +148,6 @@ const About = () => {
           </Card>
         </div>
       </div>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default About;
