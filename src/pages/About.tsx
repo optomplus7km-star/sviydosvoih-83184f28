@@ -181,10 +181,9 @@ const About = () => {
           <Card className="bg-muted/30 border-dashed">
             <CardContent className="py-8">
               <div className="prose prose-slate dark:prose-invert max-w-none">
-                <h3 className="text-lg font-semibold mb-4">Как это работает?</h3>
+                <h3 className="text-lg font-semibold mb-4">Як це працює?</h3>
                 <ol className="space-y-3 text-muted-foreground">
-                  <li>
-                    <strong className="text-foreground">Регистрация группы:</strong> Экспертные группы и организации
+                  <li>Список здорових сил України: Експерти та організації реєструються на нашій платформі "Свій до своїх" проходячи верифікацію на свою репутацію. ются на платформе, проходя верификацию.<strong className="text-foreground">Регистрация группы:</strong> Экспертные группы и организации
                     регистрируются на платформе, проходя верификацию.
                   </li>
                   <li>
