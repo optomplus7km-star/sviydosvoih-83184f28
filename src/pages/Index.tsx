@@ -57,10 +57,10 @@ const Index = () => {
               Свій до своїх
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-              Платформа развития, коммуникации и кооперации
+              {t('hero.title')}
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Строим субъектное гражданское общество
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" asChild className="gap-2">
@@ -124,7 +124,7 @@ const Index = () => {
                 </h3>
                 <p className="text-muted-foreground flex-grow">{feature.description}</p>
                 <div className="mt-4 text-primary text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  Перейти
+                  {t('hero.go')}
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </Link>
@@ -137,32 +137,32 @@ const Index = () => {
       <section className="py-20 lg:py-28 bg-muted/30">
         <div className="civic-container">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Принципи платформи</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t('values.title')}</h2>
             <p className="text-muted-foreground text-lg">
-              Ми будуємо нову модель громадянської взаємодії на основі довіри та горизонтальних зв'язків
+              {t('values.subtitle')}
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-card border border-border rounded-xl p-6">
               <FileCheck className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Верифікація</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('values.verification')}</h3>
               <p className="text-muted-foreground text-sm">
-                Кожна група проходить перевірку репутації та експертизи
+                {t('values.verification.desc')}
               </p>
             </div>
             <div className="bg-card border border-border rounded-xl p-6">
               <Eye className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Прозорість</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('values.transparency')}</h3>
               <p className="text-muted-foreground text-sm">
-                Відкритий процес прийняття рішень та звітності
+                {t('values.transparency.desc')}
               </p>
             </div>
             <div className="bg-card border border-border rounded-xl p-6">
               <Network className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Горизонтальність</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('values.horizontality')}</h3>
               <p className="text-muted-foreground text-sm">
-                Рівні права та можливості для всіх учасників
+                {t('values.horizontality.desc')}
               </p>
             </div>
           </div>
@@ -174,10 +174,10 @@ const Index = () => {
         <div className="civic-container">
           <div className="bg-primary rounded-2xl p-8 sm:p-12 lg:p-16 text-center">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-foreground mb-4">
-              Готові до співпраці?
+              {t('cta.title')}
             </h2>
             <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-              Приєднуйтесь до платформи та станьте частиною мережі горизонтальної влади
+              {t('cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" variant="secondary" asChild>
