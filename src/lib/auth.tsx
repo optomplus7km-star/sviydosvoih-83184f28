@@ -2,10 +2,31 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+/**
+ * Authentication Context
+ * 
+ * SECURITY ARCHITECTURE NOTE:
+ * The `isAdmin` flag in this context is for UX/UI purposes ONLY.
+ * It controls what UI elements are shown to the user (e.g., admin buttons, protected routes).
+ * 
+ * ACTUAL SECURITY is enforced server-side via Row Level Security (RLS) policies
+ * that use the `has_role(auth.uid(), 'admin')` function. All database operations
+ * (INSERT, UPDATE, DELETE) on admin-protected tables are validated by RLS regardless
+ * of what the client-side `isAdmin` flag says.
+ * 
+ * This means:
+ * - Even if an attacker manipulates `isAdmin` client-side, they cannot bypass RLS
+ * - Admin-only API calls will fail at the database level for non-admin users
+ * - The client-side check is purely for better UX (hiding irrelevant UI elements)
+ */
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
+  /** 
+   * UX-only flag for showing/hiding admin UI elements.
+   * Actual authorization is enforced by RLS policies server-side.
+   */
   isAdmin: boolean;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;

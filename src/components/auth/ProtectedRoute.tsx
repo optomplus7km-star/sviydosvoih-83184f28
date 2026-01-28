@@ -3,8 +3,25 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
 import { Loader2 } from 'lucide-react';
 
+/**
+ * ProtectedRoute Component
+ * 
+ * SECURITY NOTE:
+ * This component provides UI-level route protection only. It prevents non-authenticated
+ * or non-admin users from seeing protected pages, improving UX.
+ * 
+ * ACTUAL SECURITY is enforced by Row Level Security (RLS) policies at the database level.
+ * Even if a user bypasses this component (e.g., via direct API calls), they cannot
+ * access or modify protected data because RLS policies check `has_role(auth.uid(), 'admin')`.
+ * 
+ * The `requireAdmin` prop controls UI visibility, not actual authorization.
+ */
 interface ProtectedRouteProps {
   children: ReactNode;
+  /** 
+   * When true, redirects non-admin users to home page.
+   * This is a UX feature - actual security is enforced by RLS.
+   */
   requireAdmin?: boolean;
 }
 
