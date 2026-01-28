@@ -1,232 +1,144 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+// Re-export from new i18n system for backward compatibility
+import { useTranslation, I18nProvider } from '@/lib/i18n/useTranslation';
+import { translations, Language } from '@/lib/i18n/translations';
 
-type Language = 'ru' | 'ua';
-
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
-}
-
-const translations: Record<Language, Record<string, string>> = {
-  ru: {
-    // Header
-    'nav.catalog': 'Каталог',
-    'nav.communication': 'Коммуникация',
-    'nav.cooperation': 'Сотрудничество',
-    'nav.about': 'О нас',
-    'nav.contact': 'Контакт',
-    'nav.login': 'Войти',
-    'nav.signup': 'Регистрация',
-    'nav.logout': 'Выйти',
-    'nav.admin': 'Админ-панель',
-    
-    // Landing
-    'hero.title': 'Платформа розвитку, комунікації та кооперації',
-    'hero.subtitle': 'Будуємо суб\'єктне громадянське суспільство',
-    'hero.cta': 'Приєднатися',
-    'hero.secondary': 'Дізнатися більше',
-    'hero.go': 'Перейти',
-    'features.catalog.title': 'Каталог груп',
-    'features.catalog.desc': 'Реєстр експертних груп та еліт з верифікованою репутацією',
-    'features.projects.title': 'Кімната проєктів',
-    'features.projects.desc': 'Спільні ініціативи для вирішення суспільних завдань',
-    'features.trust.title': 'Довіра та прозорість',
-    'features.trust.desc': 'Відкрита структура взаємодії та звітності',
-    'stats.groups': 'Експертних груп',
-    'stats.projects': 'Активних проєктів',
-    'stats.participants': 'Учасників',
-    'values.title': 'Принципи платформи',
-    'values.subtitle': 'Ми будуємо нову модель громадянської взаємодії на основі довіри та горизонтальних зв\'язків',
-    'values.verification': 'Верифікація',
-    'values.verification.desc': 'Кожна група проходить перевірку репутації та експертизи',
-    'values.transparency': 'Прозорість',
-    'values.transparency.desc': 'Відкритий процес прийняття рішень та звітності',
-    'values.horizontality': 'Горизонтальність',
-    'values.horizontality.desc': 'Рівні права та можливості для всіх учасників',
-    'cta.title': 'Готові до співпраці?',
-    'cta.subtitle': 'Приєднуйтесь до платформи та станьте частиною мережі горизонтальної влади',
-    
-    // Catalog
-    'catalog.title': 'Каталог групп',
-    'catalog.subtitle': 'Реестр экспертных групп и элит',
-    'catalog.empty': 'Группы ещё не добавлены',
-    'catalog.expertise': 'Экспертиза',
-    'catalog.contact': 'Связаться',
-    
-    // Cooperation
-    'cooperation.title': 'Комната проектов',
-    'cooperation.subtitle': 'Активные инициативы для сотрудничества',
-    'cooperation.empty': 'Проекты ещё не созданы',
-    'cooperation.join': 'Присоединиться',
-    'cooperation.requirements': 'Требования',
-    'cooperation.status.open': 'Открыт',
-    'cooperation.status.in_progress': 'В процессе',
-    'cooperation.status.closed': 'Закрыт',
-    
-    // Communication
-    'communication.title': 'Коммуникация',
-    'communication.subtitle': 'Новости и обновления сообщества',
-    'communication.coming': 'Скоро здесь появятся новости и обновления платформы',
-    
-    // About
-    'about.title': 'О платформе',
-    'about.manifesto.title': 'Манифест',
-    'about.manifesto.p1': 'Мы верим в силу горизонтальной кооперации. В мире, где вертикальные структуры власти часто становятся препятствием для прогресса, мы создаём пространство для равноправного сотрудничества.',
-    'about.manifesto.p2': 'Наша платформа объединяет экспертов, лидеров мнений и активных граждан для решения задач, которые невозможно решить в одиночку.',
-    'about.manifesto.p3': 'Прозрачность, доверие и ответственность — основы нашего взаимодействия.',
-    'about.values.title': 'Ценности',
-    'about.values.horizontal': 'Горизонтальность',
-    'about.values.horizontal.desc': 'Равноправие участников независимо от статуса',
-    'about.values.transparency': 'Прозрачность',
-    'about.values.transparency.desc': 'Открытость процессов и решений',
-    'about.values.responsibility': 'Ответственность',
-    'about.values.responsibility.desc': 'Каждый несёт ответственность за общий результат',
-    
-    // Contact
-    'contact.title': 'Связаться с нами',
-    'contact.subtitle': 'Отправьте сообщение администрации платформы',
-    'contact.name': 'Ваше имя',
-    'contact.email': 'Email (необязательно)',
-    'contact.topic': 'Тема',
-    'contact.message': 'Сообщение',
-    'contact.submit': 'Отправить',
-    'contact.success': 'Сообщение успешно отправлено',
-    'contact.error': 'Ошибка при отправке',
-    
-    // Common
-    'common.loading': 'Загрузка...',
-    'common.error': 'Произошла ошибка',
-    'common.back': 'Назад',
-    'common.submit': 'Отправить',
-    'common.cancel': 'Отмена',
-  },
-  ua: {
-    // Header
-    'nav.catalog': 'Каталог',
-    'nav.communication': 'Комунікація',
-    'nav.cooperation': 'Співпраця',
-    'nav.about': 'Про нас',
-    'nav.contact': 'Контакт',
-    'nav.login': 'Увійти',
-    'nav.signup': 'Реєстрація',
-    'nav.logout': 'Вийти',
-    'nav.admin': 'Адмін-панель',
-    
-    // Landing
-    'hero.title': 'Платформа розвитку, комунікації та кооперації',
-    'hero.subtitle': 'Будуємо суб\'єктне громадянське суспільство',
-    'hero.cta': 'Приєднатися',
-    'hero.secondary': 'Дізнатися більше',
-    'hero.go': 'Перейти',
-    'features.catalog.title': 'Каталог груп',
-    'features.catalog.desc': 'Реєстр експертних груп та еліт з верифікованою репутацією',
-    'features.projects.title': 'Кімната проєктів',
-    'features.projects.desc': 'Спільні ініціативи для вирішення суспільних завдань',
-    'features.trust.title': 'Довіра та прозорість',
-    'features.trust.desc': 'Відкрита структура взаємодії та звітності',
-    'stats.groups': 'Експертних груп',
-    'stats.projects': 'Активних проєктів',
-    'stats.participants': 'Учасників',
-    'values.title': 'Принципи платформи',
-    'values.subtitle': 'Ми будуємо нову модель громадянської взаємодії на основі довіри та горизонтальних зв\'язків',
-    'values.verification': 'Верифікація',
-    'values.verification.desc': 'Кожна група проходить перевірку репутації та експертизи',
-    'values.transparency': 'Прозорість',
-    'values.transparency.desc': 'Відкритий процес прийняття рішень та звітності',
-    'values.horizontality': 'Горизонтальність',
-    'values.horizontality.desc': 'Рівні права та можливості для всіх учасників',
-    'cta.title': 'Готові до співпраці?',
-    'cta.subtitle': 'Приєднуйтесь до платформи та станьте частиною мережі горизонтальної влади',
-    
-    // Catalog
-    'catalog.title': 'Каталог груп',
-    'catalog.subtitle': 'Реєстр експертних груп та еліт',
-    'catalog.empty': 'Групи ще не додані',
-    'catalog.expertise': 'Експертиза',
-    'catalog.contact': 'Зв\'язатися',
-    
-    // Cooperation
-    'cooperation.title': 'Кімната проєктів',
-    'cooperation.subtitle': 'Активні ініціативи для співпраці',
-    'cooperation.empty': 'Проєкти ще не створені',
-    'cooperation.join': 'Приєднатися',
-    'cooperation.requirements': 'Вимоги',
-    'cooperation.status.open': 'Відкрито',
-    'cooperation.status.in_progress': 'В процесі',
-    'cooperation.status.closed': 'Закрито',
-    
-    // Communication
-    'communication.title': 'Комунікація',
-    'communication.subtitle': 'Новини та оновлення спільноти',
-    'communication.coming': 'Скоро тут з\'являться новини та оновлення платформи',
-    
-    // About
-    'about.title': 'Про платформу',
-    'about.manifesto.title': 'Маніфест',
-    'about.manifesto.p1': 'Ми віримо в силу горизонтальної кооперації. У світі, де вертикальні структури влади часто стають перешкодою для прогресу, ми створюємо простір для рівноправної співпраці.',
-    'about.manifesto.p2': 'Наша платформа об\'єднує експертів, лідерів думок та активних громадян для вирішення завдань, які неможливо вирішити наодинці.',
-    'about.manifesto.p3': 'Прозорість, довіра та відповідальність — основи нашої взаємодії.',
-    'about.values.title': 'Цінності',
-    'about.values.horizontal': 'Горизонтальність',
-    'about.values.horizontal.desc': 'Рівноправ\'я учасників незалежно від статусу',
-    'about.values.transparency': 'Прозорість',
-    'about.values.transparency.desc': 'Відкритість процесів та рішень',
-    'about.values.responsibility': 'Відповідальність',
-    'about.values.responsibility.desc': 'Кожен несе відповідальність за спільний результат',
-    
-    // Contact
-    'contact.title': 'Зв\'язатися з нами',
-    'contact.subtitle': 'Надішліть повідомлення адміністрації платформи',
-    'contact.name': 'Ваше ім\'я',
-    'contact.email': 'Email (необов\'язково)',
-    'contact.topic': 'Тема',
-    'contact.message': 'Повідомлення',
-    'contact.submit': 'Надіслати',
-    'contact.success': 'Повідомлення успішно надіслано',
-    'contact.error': 'Помилка при надсиланні',
-    
-    // Common
-    'common.loading': 'Завантаження...',
-    'common.error': 'Сталася помилка',
-    'common.back': 'Назад',
-    'common.submit': 'Надіслати',
-    'common.cancel': 'Скасувати',
-  },
-};
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('language');
-    return (saved as Language) || 'ru';
-  });
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem('language', lang);
-  };
-
-  const t = (key: string): string => {
-    return translations[language][key] || key;
-  };
-
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
-}
-
+// Create a compatibility layer that wraps the new API
 export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
-  }
-  return context;
+  const { language, setLanguage, t: newT } = useTranslation();
+  
+  // Create a compatibility t function that takes a single key like 'about.title'
+  // and maps it to the new format t('about', 'title')
+  const t = (key: string): string => {
+    // Map old-style keys to new format
+    const keyMap: Record<string, [string, string]> = {
+      // Navigation
+      'nav.catalog': ['nav', 'catalog'],
+      'nav.communication': ['nav', 'communication'],
+      'nav.cooperation': ['nav', 'cooperation'],
+      'nav.about': ['nav', 'about'],
+      'nav.contact': ['nav', 'contact'],
+      'nav.login': ['nav', 'login'],
+      'nav.signup': ['nav', 'signup'],
+      'nav.logout': ['nav', 'logout'],
+      'nav.admin': ['nav', 'admin'],
+      'nav.groups': ['nav', 'groups'],
+      'nav.projects': ['nav', 'projects'],
+      'nav.news': ['nav', 'news'],
+      'nav.dashboard': ['nav', 'dashboard'],
+      
+      // Hero
+      'hero.title': ['hero', 'title'],
+      'hero.subtitle': ['hero', 'subtitle'],
+      'hero.cta': ['hero', 'cta'],
+      'hero.secondary': ['hero', 'secondary'],
+      'hero.go': ['hero', 'go'],
+      
+      // Features
+      'features.catalog.title': ['features', 'catalog_title'],
+      'features.catalog.desc': ['features', 'catalog_desc'],
+      'features.projects.title': ['features', 'projects_title'],
+      'features.projects.desc': ['features', 'projects_desc'],
+      'features.trust.title': ['features', 'trust_title'],
+      'features.trust.desc': ['features', 'trust_desc'],
+      
+      // Stats
+      'stats.groups': ['stats', 'groups'],
+      'stats.projects': ['stats', 'projects'],
+      'stats.participants': ['stats', 'participants'],
+      
+      // Values
+      'values.title': ['values', 'title'],
+      'values.subtitle': ['values', 'subtitle'],
+      'values.verification': ['values', 'verification'],
+      'values.verification.desc': ['values', 'verification_desc'],
+      'values.transparency': ['values', 'transparency'],
+      'values.transparency.desc': ['values', 'transparency_desc'],
+      'values.horizontality': ['values', 'horizontality'],
+      'values.horizontality.desc': ['values', 'horizontality_desc'],
+      
+      // CTA
+      'cta.title': ['cta', 'title'],
+      'cta.subtitle': ['cta', 'subtitle'],
+      
+      // Catalog
+      'catalog.title': ['catalog', 'title'],
+      'catalog.subtitle': ['catalog', 'subtitle'],
+      'catalog.empty': ['catalog', 'empty'],
+      'catalog.expertise': ['catalog', 'expertise'],
+      'catalog.contact': ['catalog', 'contact'],
+      
+      // Cooperation
+      'cooperation.title': ['cooperation', 'title'],
+      'cooperation.subtitle': ['cooperation', 'subtitle'],
+      'cooperation.empty': ['cooperation', 'empty'],
+      'cooperation.join': ['cooperation', 'join'],
+      'cooperation.requirements': ['cooperation', 'requirements'],
+      'cooperation.status.open': ['cooperation', 'status_open'],
+      'cooperation.status.in_progress': ['cooperation', 'status_in_progress'],
+      'cooperation.status.closed': ['cooperation', 'status_closed'],
+      
+      // Communication
+      'communication.title': ['communication', 'title'],
+      'communication.subtitle': ['communication', 'subtitle'],
+      'communication.coming': ['communication', 'coming'],
+      
+      // About
+      'about.title': ['about', 'title'],
+      'about.manifesto.title': ['about', 'manifesto_title'],
+      'about.manifesto.p1': ['about', 'manifesto_p1'],
+      'about.manifesto.p2': ['about', 'manifesto_p2'],
+      'about.manifesto.p3': ['about', 'manifesto_p3'],
+      'about.values.title': ['about', 'values_title'],
+      'about.values.horizontal': ['about', 'values_horizontal'],
+      'about.values.horizontal.desc': ['about', 'values_horizontal_desc'],
+      'about.values.transparency': ['about', 'values_transparency'],
+      'about.values.transparency.desc': ['about', 'values_transparency_desc'],
+      'about.values.responsibility': ['about', 'values_responsibility'],
+      'about.values.responsibility.desc': ['about', 'values_responsibility_desc'],
+      
+      // Contact
+      'contact.title': ['contact', 'title'],
+      'contact.subtitle': ['contact', 'subtitle'],
+      'contact.name': ['contact', 'name'],
+      'contact.email': ['contact', 'email'],
+      'contact.topic': ['contact', 'topic'],
+      'contact.message': ['contact', 'message'],
+      'contact.submit': ['contact', 'submit'],
+      'contact.success': ['contact', 'success'],
+      'contact.error': ['contact', 'error'],
+      
+      // Common
+      'common.loading': ['common', 'loading'],
+      'common.error': ['common', 'error'],
+      'common.back': ['common', 'back'],
+      'common.submit': ['common', 'submit'],
+      'common.cancel': ['common', 'cancel'],
+    };
+    
+    const mapping = keyMap[key];
+    if (mapping) {
+      return newT(mapping[0] as any, mapping[1]);
+    }
+    
+    // Try to parse the key directly (section.key format)
+    const parts = key.split('.');
+    if (parts.length >= 2) {
+      const section = parts[0];
+      const subKey = parts.slice(1).join('_');
+      try {
+        return newT(section as any, subKey);
+      } catch {
+        return key;
+      }
+    }
+    
+    return key;
+  };
+  
+  return { language, setLanguage, t };
 }
+
+// Re-export the provider with a different name for compatibility
+export const LanguageProvider = I18nProvider;
+
+export type { Language };
