@@ -428,79 +428,6 @@ export type Database = {
         }
         Relationships: []
       }
-      project_images: {
-        Row: {
-          caption: string | null
-          created_at: string
-          display_order: number
-          id: string
-          image_url: string
-          is_thumbnail: boolean
-          project_id: string
-        }
-        Insert: {
-          caption?: string | null
-          created_at?: string
-          display_order?: number
-          id?: string
-          image_url: string
-          is_thumbnail?: boolean
-          project_id: string
-        }
-        Update: {
-          caption?: string | null
-          created_at?: string
-          display_order?: number
-          id?: string
-          image_url?: string
-          is_thumbnail?: boolean
-          project_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "project_images_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      project_social_links: {
-        Row: {
-          created_at: string
-          display_order: number
-          id: string
-          platform: string
-          project_id: string
-          url: string
-        }
-        Insert: {
-          created_at?: string
-          display_order?: number
-          id?: string
-          platform: string
-          project_id: string
-          url: string
-        }
-        Update: {
-          created_at?: string
-          display_order?: number
-          id?: string
-          platform?: string
-          project_id?: string
-          url?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "project_social_links_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       projects: {
         Row: {
           created_at: string
@@ -509,6 +436,7 @@ export type Database = {
           description: string | null
           group_id: string | null
           id: string
+          images: string[] | null
           is_active: boolean
           owner_id: string | null
           requirements: string | null
@@ -525,6 +453,7 @@ export type Database = {
           description?: string | null
           group_id?: string | null
           id?: string
+          images?: string[] | null
           is_active?: boolean
           owner_id?: string | null
           requirements?: string | null
@@ -541,6 +470,7 @@ export type Database = {
           description?: string | null
           group_id?: string | null
           id?: string
+          images?: string[] | null
           is_active?: boolean
           owner_id?: string | null
           requirements?: string | null
