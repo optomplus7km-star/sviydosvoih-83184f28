@@ -102,6 +102,21 @@ export const translations = {
       ua: 'Групи',
       en: 'Groups',
     },
+    communication: {
+      ru: 'Коммуникация',
+      ua: 'Комунікація',
+      en: 'Communication',
+    },
+    cooperation: {
+      ru: 'Кооперация',
+      ua: 'Кооперація',
+      en: 'Cooperation',
+    },
+    contact: {
+      ru: 'Связь',
+      ua: "Зв'язок",
+      en: 'Contact',
+    },
     news: {
       ru: 'Новости',
       ua: 'Новини',

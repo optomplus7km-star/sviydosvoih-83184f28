@@ -11,9 +11,9 @@ import { I18nProvider } from "@/lib/i18n/useTranslation";
 import KrakenHome from "./pages/KrakenHome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import KrakenCatalog from "./pages/KrakenCatalog";
-import KrakenGroups from "./pages/KrakenGroups";
-import KrakenNews from "./pages/KrakenNews";
+import CatalogPage from "./pages/CatalogPage";
+import CommunicationPage from "./pages/CommunicationPage";
+import CooperationPage from "./pages/CooperationPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -40,13 +40,13 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                {/* Public pages */}
+              {/* Public pages */}
                 <Route path="/" element={<KrakenHome />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/catalog" element={<KrakenCatalog />} />
-                <Route path="/groups" element={<KrakenGroups />} />
-                <Route path="/news" element={<KrakenNews />} />
+                <Route path="/catalog" element={<CatalogPage />} />
+                <Route path="/communication" element={<CommunicationPage />} />
+                <Route path="/cooperation" element={<CooperationPage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 
@@ -64,11 +64,6 @@ const App = () => (
                   <Route path="projects" element={<AdminProjects />} />
                   <Route path="applications" element={<AdminApplications />} />
                 </Route>
-                
-                {/* Legacy redirects */}
-                <Route path="/projects" element={<KrakenCatalog />} />
-                <Route path="/cooperation" element={<KrakenCatalog />} />
-                <Route path="/communication" element={<KrakenNews />} />
                 
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />

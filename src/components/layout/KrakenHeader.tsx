@@ -43,9 +43,10 @@ export function KrakenHeader() {
   const navLinks = [
     { href: '/', label: t('nav', 'home') },
     { href: '/catalog', label: t('nav', 'catalog') },
-    { href: '/groups', label: t('nav', 'groups') },
-    { href: '/news', label: t('nav', 'news') },
+    { href: '/communication', label: t('nav', 'communication') },
+    { href: '/cooperation', label: t('nav', 'cooperation') },
     { href: '/about', label: t('nav', 'about') },
+    { href: '/contact', label: t('nav', 'contact') },
   ];
 
   const isActive = (path: string) => {
