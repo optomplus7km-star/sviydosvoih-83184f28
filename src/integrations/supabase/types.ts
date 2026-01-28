@@ -437,6 +437,7 @@ export type Database = {
           current_participants: number | null
           deadline: string | null
           description: string | null
+          display_order: number
           group_id: string | null
           id: string
           images: string[] | null
@@ -454,6 +455,7 @@ export type Database = {
           current_participants?: number | null
           deadline?: string | null
           description?: string | null
+          display_order?: number
           group_id?: string | null
           id?: string
           images?: string[] | null
@@ -471,6 +473,7 @@ export type Database = {
           current_participants?: number | null
           deadline?: string | null
           description?: string | null
+          display_order?: number
           group_id?: string | null
           id?: string
           images?: string[] | null
