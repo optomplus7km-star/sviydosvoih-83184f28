@@ -94,6 +94,111 @@ export type Database = {
         }
         Relationships: []
       }
+      group_images: {
+        Row: {
+          caption: string | null
+          created_at: string
+          display_order: number
+          group_id: string
+          id: string
+          image_url: string
+          is_thumbnail: boolean
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          group_id: string
+          id?: string
+          image_url: string
+          is_thumbnail?: boolean
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          group_id?: string
+          id?: string
+          image_url?: string
+          is_thumbnail?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_images_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_members: {
+        Row: {
+          group_id: string
+          id: string
+          joined_at: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          joined_at?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_social_links: {
+        Row: {
+          created_at: string
+          display_order: number
+          group_id: string
+          id: string
+          platform: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          group_id: string
+          id?: string
+          platform: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          group_id?: string
+          id?: string
+          platform?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_social_links_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       groups: {
         Row: {
           contact_email: string | null
@@ -102,7 +207,10 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean
+          is_private: boolean
           name: string
+          owner_id: string | null
+          parent_group_id: string | null
           updated_at: string
           website: string | null
         }
@@ -113,7 +221,10 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_private?: boolean
           name: string
+          owner_id?: string | null
+          parent_group_id?: string | null
           updated_at?: string
           website?: string | null
         }
@@ -124,9 +235,166 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          is_private?: boolean
           name?: string
+          owner_id?: string | null
+          parent_group_id?: string | null
           updated_at?: string
           website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groups_parent_group_id_fkey"
+            columns: ["parent_group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      news: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          excerpt: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      poll_options: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          option_text: string
+          poll_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          option_text: string
+          poll_id: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          option_text?: string
+          poll_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_options_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_id?: string
+          poll_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "poll_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      polls: {
+        Row: {
+          created_at: string
+          created_by: string
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          is_multiple_choice: boolean
+          question: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_multiple_choice?: boolean
+          question: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          is_multiple_choice?: boolean
+          question?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -160,37 +428,125 @@ export type Database = {
         }
         Relationships: []
       }
+      project_images: {
+        Row: {
+          caption: string | null
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+          is_thumbnail: boolean
+          project_id: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+          is_thumbnail?: boolean
+          project_id: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+          is_thumbnail?: boolean
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_images_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_social_links: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          platform: string
+          project_id: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          platform: string
+          project_id: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          platform?: string
+          project_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_social_links_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           created_at: string
+          current_participants: number | null
+          deadline: string | null
           description: string | null
           group_id: string | null
           id: string
           is_active: boolean
+          owner_id: string | null
           requirements: string | null
+          resources: string | null
           status: string
+          target_participants: number | null
           title: string
           updated_at: string
         }
         Insert: {
           created_at?: string
+          current_participants?: number | null
+          deadline?: string | null
           description?: string | null
           group_id?: string | null
           id?: string
           is_active?: boolean
+          owner_id?: string | null
           requirements?: string | null
+          resources?: string | null
           status?: string
+          target_participants?: number | null
           title: string
           updated_at?: string
         }
         Update: {
           created_at?: string
+          current_participants?: number | null
+          deadline?: string | null
           description?: string | null
           group_id?: string | null
           id?: string
           is_active?: boolean
+          owner_id?: string | null
           requirements?: string | null
+          resources?: string | null
           status?: string
+          target_participants?: number | null
           title?: string
           updated_at?: string
         }
