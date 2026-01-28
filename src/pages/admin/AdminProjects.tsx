@@ -29,8 +29,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Image as ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import { ProjectImageUpload } from '@/components/admin/ProjectImageUpload';
 
 interface ProjectForm {
   title: string;
@@ -39,6 +40,7 @@ interface ProjectForm {
   group_id: string | null;
   status: string;
   is_active: boolean;
+  images: string[];
 }
 
 const emptyForm: ProjectForm = {
@@ -48,6 +50,7 @@ const emptyForm: ProjectForm = {
   group_id: null,
   status: 'open',
   is_active: true,
+  images: [],
 };
 
 const statusLabels: Record<string, string> = {
@@ -92,8 +95,13 @@ export default function AdminProjects() {
   const saveMutation = useMutation({
     mutationFn: async () => {
       const payload = {
-        ...form,
+        title: form.title,
+        description: form.description,
+        requirements: form.requirements,
         group_id: form.group_id || null,
+        status: form.status,
+        is_active: form.is_active,
+        images: form.images,
       };
       
       if (editingId) {
@@ -140,6 +148,7 @@ export default function AdminProjects() {
       group_id: project.group_id,
       status: project.status,
       is_active: project.is_active,
+      images: (project as any).images || [],
     });
     setIsDialogOpen(true);
   };
@@ -169,9 +178,9 @@ export default function AdminProjects() {
               Добавить проект
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-lg">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingId ? 'Редактировать проект' : 'Новый проект'}</DialogTitle>
+              <DialogTitle>{editingId ? 'Редагувати проєкт' : 'Новий проєкт'}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -242,8 +251,14 @@ export default function AdminProjects() {
                   checked={form.is_active}
                   onCheckedChange={(checked) => setForm({ ...form, is_active: checked })}
                 />
-                <Label htmlFor="is_active">Активен</Label>
+                <Label htmlFor="is_active">Активний</Label>
               </div>
+
+              {/* Image upload */}
+              <ProjectImageUpload
+                images={form.images}
+                onChange={(images) => setForm({ ...form, images })}
+              />
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="outline" onClick={closeDialog}>
                   Отмена
