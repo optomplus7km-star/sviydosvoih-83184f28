@@ -137,24 +137,350 @@ export const translations = {
   // Hero section
   hero: {
     title: {
-      ru: 'Исследуй глубины сотрудничества',
-      ua: 'Досліджуй глибини співпраці',
-      en: 'Explore the depths of collaboration',
+      ru: 'Платформа развития, коммуникации и кооперации',
+      ua: 'Платформа розвитку, комунікації та кооперації',
+      en: 'Platform for development, communication and cooperation',
     },
     subtitle: {
-      ru: 'Платформа для морских проектов, экологических инициатив и исследовательских команд',
-      ua: 'Платформа для морських проектів, екологічних ініціатив та дослідницьких команд',
-      en: 'Platform for marine projects, ecological initiatives, and research teams',
+      ru: 'Строим субъектное гражданское общество',
+      ua: 'Будуємо суб\'єктне громадянське суспільство',
+      en: 'Building a subject-oriented civil society',
     },
     cta: {
-      ru: 'Открыть каталог',
-      ua: 'Відкрити каталог',
-      en: 'Open catalog',
+      ru: 'Присоединиться',
+      ua: 'Приєднатися',
+      en: 'Join',
     },
     ctaSecondary: {
       ru: 'Создать проект',
       ua: 'Створити проект',
       en: 'Create project',
+    },
+    secondary: {
+      ru: 'Узнать больше',
+      ua: 'Дізнатися більше',
+      en: 'Learn more',
+    },
+    go: {
+      ru: 'Перейти',
+      ua: 'Перейти',
+      en: 'Go',
+    },
+  },
+
+  // Features
+  features: {
+    catalog_title: {
+      ru: 'Каталог групп',
+      ua: 'Каталог груп',
+      en: 'Group Catalog',
+    },
+    catalog_desc: {
+      ru: 'Реестр экспертных групп и элит с верифицированной репутацией',
+      ua: 'Реєстр експертних груп та еліт з верифікованою репутацією',
+      en: 'Registry of expert groups with verified reputation',
+    },
+    projects_title: {
+      ru: 'Комната проектов',
+      ua: 'Кімната проєктів',
+      en: 'Project Room',
+    },
+    projects_desc: {
+      ru: 'Совместные инициативы для решения общественных задач',
+      ua: 'Спільні ініціативи для вирішення суспільних завдань',
+      en: 'Joint initiatives for solving social challenges',
+    },
+    trust_title: {
+      ru: 'Доверие и прозрачность',
+      ua: 'Довіра та прозорість',
+      en: 'Trust and Transparency',
+    },
+    trust_desc: {
+      ru: 'Открытая структура взаимодействия и отчётности',
+      ua: 'Відкрита структура взаємодії та звітності',
+      en: 'Open structure of interaction and accountability',
+    },
+  },
+
+  // Stats
+  stats: {
+    groups: {
+      ru: 'Экспертных групп',
+      ua: 'Експертних груп',
+      en: 'Expert groups',
+    },
+    projects: {
+      ru: 'Активных проектов',
+      ua: 'Активних проєктів',
+      en: 'Active projects',
+    },
+    participants: {
+      ru: 'Участников',
+      ua: 'Учасників',
+      en: 'Participants',
+    },
+  },
+
+  // Values
+  values: {
+    title: {
+      ru: 'Принципы платформы',
+      ua: 'Принципи платформи',
+      en: 'Platform Principles',
+    },
+    subtitle: {
+      ru: 'Мы строим новую модель гражданского взаимодействия на основе доверия и горизонтальных связей',
+      ua: 'Ми будуємо нову модель громадянської взаємодії на основі довіри та горизонтальних зв\'язків',
+      en: 'We build a new model of civic interaction based on trust and horizontal connections',
+    },
+    verification: {
+      ru: 'Верификация',
+      ua: 'Верифікація',
+      en: 'Verification',
+    },
+    verification_desc: {
+      ru: 'Каждая группа проходит проверку репутации и экспертизы',
+      ua: 'Кожна група проходить перевірку репутації та експертизи',
+      en: 'Each group undergoes reputation and expertise verification',
+    },
+    transparency: {
+      ru: 'Прозрачность',
+      ua: 'Прозорість',
+      en: 'Transparency',
+    },
+    transparency_desc: {
+      ru: 'Открытый процесс принятия решений и отчётности',
+      ua: 'Відкритий процес прийняття рішень та звітності',
+      en: 'Open decision-making and reporting process',
+    },
+    horizontality: {
+      ru: 'Горизонтальность',
+      ua: 'Горизонтальність',
+      en: 'Horizontality',
+    },
+    horizontality_desc: {
+      ru: 'Равные права и возможности для всех участников',
+      ua: 'Рівні права та можливості для всіх учасників',
+      en: 'Equal rights and opportunities for all participants',
+    },
+  },
+
+  // CTA
+  cta: {
+    title: {
+      ru: 'Готовы к сотрудничеству?',
+      ua: 'Готові до співпраці?',
+      en: 'Ready to collaborate?',
+    },
+    subtitle: {
+      ru: 'Присоединяйтесь к платформе и станьте частью сети горизонтальной власти',
+      ua: 'Приєднуйтесь до платформи та станьте частиною мережі горизонтальної влади',
+      en: 'Join the platform and become part of a horizontal governance network',
+    },
+  },
+
+  // Catalog
+  catalog: {
+    title: {
+      ru: 'Каталог групп',
+      ua: 'Каталог груп',
+      en: 'Group Catalog',
+    },
+    subtitle: {
+      ru: 'Реестр экспертных групп и элит',
+      ua: 'Реєстр експертних груп та еліт',
+      en: 'Registry of expert groups',
+    },
+    empty: {
+      ru: 'Группы ещё не добавлены',
+      ua: 'Групи ще не додані',
+      en: 'No groups added yet',
+    },
+    expertise: {
+      ru: 'Экспертиза',
+      ua: 'Експертиза',
+      en: 'Expertise',
+    },
+    contact: {
+      ru: 'Связаться',
+      ua: 'Зв\'язатися',
+      en: 'Contact',
+    },
+  },
+
+  // Cooperation
+  cooperation: {
+    title: {
+      ru: 'Комната проектов',
+      ua: 'Кімната проєктів',
+      en: 'Project Room',
+    },
+    subtitle: {
+      ru: 'Активные инициативы для сотрудничества',
+      ua: 'Активні ініціативи для співпраці',
+      en: 'Active initiatives for cooperation',
+    },
+    empty: {
+      ru: 'Проекты ещё не созданы',
+      ua: 'Проєкти ще не створені',
+      en: 'No projects created yet',
+    },
+    join: {
+      ru: 'Присоединиться',
+      ua: 'Приєднатися',
+      en: 'Join',
+    },
+    requirements: {
+      ru: 'Требования',
+      ua: 'Вимоги',
+      en: 'Requirements',
+    },
+    status_open: {
+      ru: 'Открыт',
+      ua: 'Відкрито',
+      en: 'Open',
+    },
+    status_in_progress: {
+      ru: 'В процессе',
+      ua: 'В процесі',
+      en: 'In progress',
+    },
+    status_closed: {
+      ru: 'Закрыт',
+      ua: 'Закрито',
+      en: 'Closed',
+    },
+  },
+
+  // Communication
+  communication: {
+    title: {
+      ru: 'Коммуникация',
+      ua: 'Комунікація',
+      en: 'Communication',
+    },
+    subtitle: {
+      ru: 'Новости и обновления сообщества',
+      ua: 'Новини та оновлення спільноти',
+      en: 'Community news and updates',
+    },
+    coming: {
+      ru: 'Скоро здесь появятся новости и обновления платформы',
+      ua: 'Скоро тут з\'являться новини та оновлення платформи',
+      en: 'Platform news and updates coming soon',
+    },
+  },
+
+  // About
+  about: {
+    title: {
+      ru: 'О платформе',
+      ua: 'Про платформу',
+      en: 'About the platform',
+    },
+    manifesto_title: {
+      ru: 'Манифест',
+      ua: 'Маніфест',
+      en: 'Manifesto',
+    },
+    manifesto_p1: {
+      ru: 'Мы верим в силу горизонтальной кооперации.',
+      ua: 'Ми віримо в силу горизонтальної кооперації.',
+      en: 'We believe in the power of horizontal cooperation.',
+    },
+    manifesto_p2: {
+      ru: 'Наша платформа объединяет экспертов, лидеров мнений и активных граждан.',
+      ua: 'Наша платформа об\'єднує експертів, лідерів думок та активних громадян.',
+      en: 'Our platform unites experts, opinion leaders, and active citizens.',
+    },
+    manifesto_p3: {
+      ru: 'Прозрачность, доверие и ответственность — основы нашего взаимодействия.',
+      ua: 'Прозорість, довіра та відповідальність — основи нашої взаємодії.',
+      en: 'Transparency, trust, and responsibility are the foundations of our interaction.',
+    },
+    values_title: {
+      ru: 'Ценности',
+      ua: 'Цінності',
+      en: 'Values',
+    },
+    values_horizontal: {
+      ru: 'Горизонтальность',
+      ua: 'Горизонтальність',
+      en: 'Horizontality',
+    },
+    values_horizontal_desc: {
+      ru: 'Равноправие участников независимо от статуса',
+      ua: 'Рівноправ\'я учасників незалежно від статусу',
+      en: 'Equality of participants regardless of status',
+    },
+    values_transparency: {
+      ru: 'Прозрачность',
+      ua: 'Прозорість',
+      en: 'Transparency',
+    },
+    values_transparency_desc: {
+      ru: 'Открытость процессов и решений',
+      ua: 'Відкритість процесів та рішень',
+      en: 'Openness of processes and decisions',
+    },
+    values_responsibility: {
+      ru: 'Ответственность',
+      ua: 'Відповідальність',
+      en: 'Responsibility',
+    },
+    values_responsibility_desc: {
+      ru: 'Каждый несёт ответственность за общий результат',
+      ua: 'Кожен несе відповідальність за спільний результат',
+      en: 'Everyone is responsible for the common result',
+    },
+  },
+
+  // Contact
+  contact: {
+    title: {
+      ru: 'Связаться с нами',
+      ua: 'Зв\'язатися з нами',
+      en: 'Contact us',
+    },
+    subtitle: {
+      ru: 'Отправьте сообщение администрации платформы',
+      ua: 'Надішліть повідомлення адміністрації платформи',
+      en: 'Send a message to the platform administration',
+    },
+    name: {
+      ru: 'Ваше имя',
+      ua: 'Ваше ім\'я',
+      en: 'Your name',
+    },
+    email: {
+      ru: 'Email (необязательно)',
+      ua: 'Email (необов\'язково)',
+      en: 'Email (optional)',
+    },
+    topic: {
+      ru: 'Тема',
+      ua: 'Тема',
+      en: 'Topic',
+    },
+    message: {
+      ru: 'Сообщение',
+      ua: 'Повідомлення',
+      en: 'Message',
+    },
+    submit: {
+      ru: 'Отправить',
+      ua: 'Надіслати',
+      en: 'Submit',
+    },
+    success: {
+      ru: 'Сообщение успешно отправлено',
+      ua: 'Повідомлення успішно надіслано',
+      en: 'Message sent successfully',
+    },
+    error: {
+      ru: 'Ошибка при отправке',
+      ua: 'Помилка при надсиланні',
+      en: 'Error sending message',
     },
   },
 
