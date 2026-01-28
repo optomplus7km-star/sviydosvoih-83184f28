@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/lib/i18n/useTranslation';
-import { Send, Instagram, Youtube, Twitter, Waves } from 'lucide-react';
+import { Send, Instagram, Youtube, Twitter, Users } from 'lucide-react';
 
 export function KrakenFooter() {
   const { t } = useTranslation();
@@ -34,8 +34,8 @@ export function KrakenFooter() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <Waves className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold kraken-gradient-text">Kraken Morskoi</span>
+              <Users className="h-8 w-8 text-primary" />
+              <span className="text-xl font-bold kraken-gradient-text">Свій до своїх</span>
             </div>
             <p className="text-muted-foreground text-sm max-w-md mb-6">
               {t('footer', 'tagline')}
@@ -94,7 +94,7 @@ export function KrakenFooter() {
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-border/50 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Kraken Morskoi. {t('footer', 'rights')}.
+            © {new Date().getFullYear()} Свій до своїх. {t('footer', 'rights')}.
           </p>
         </div>
       </div>

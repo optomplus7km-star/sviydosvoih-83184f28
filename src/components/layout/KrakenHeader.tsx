@@ -14,20 +14,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 
-const KrakenLogo = () => (
+const SiteLogo = () => (
   <svg viewBox="0 0 40 40" className="h-10 w-10" fill="none">
-    <circle cx="20" cy="20" r="18" fill="url(#krakenGradient)" />
+    <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" />
     <path
-      d="M20 8C15.5 8 12 11.5 12 16C12 18.5 13 20.5 14.5 22L12 28L16 26L14 32L18 29L20 34L22 29L26 32L24 26L28 28L25.5 22C27 20.5 28 18.5 28 16C28 11.5 24.5 8 20 8Z"
+      d="M20 10L26 16L20 22L14 16L20 10ZM20 18L26 24L20 30L14 24L20 18Z"
       fill="currentColor"
       className="text-background"
     />
-    <circle cx="16" cy="15" r="2" fill="hsl(195, 100%, 46%)" />
-    <circle cx="24" cy="15" r="2" fill="hsl(195, 100%, 46%)" />
     <defs>
-      <linearGradient id="krakenGradient" x1="0" y1="0" x2="40" y2="40">
-        <stop stopColor="hsl(195, 100%, 46%)" />
-        <stop offset="1" stopColor="hsl(175, 70%, 45%)" />
+      <linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40">
+        <stop stopColor="hsl(var(--primary))" />
+        <stop offset="1" stopColor="hsl(215, 70%, 50%)" />
       </linearGradient>
     </defs>
   </svg>
@@ -65,9 +63,9 @@ export function KrakenHeader() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <KrakenLogo />
+            <SiteLogo />
             <span className="text-xl font-bold kraken-gradient-text hidden sm:inline">
-              Kraken Morskoi
+              Свій до своїх
             </span>
           </Link>
 

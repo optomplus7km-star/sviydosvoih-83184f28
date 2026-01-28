@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Anchor, Users, Compass, BarChart3, Waves } from 'lucide-react';
+import { ArrowRight, Users, Compass, BarChart3, Briefcase, Handshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/lib/i18n/useTranslation';
 import { KrakenLayout } from '@/components/layout/KrakenLayout';
@@ -23,8 +23,8 @@ export default function KrakenHome() {
         <div className="kraken-container relative z-10 py-20">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-primary mb-6 animate-fade-in">
-              <Waves className="h-5 w-5" />
-              <span className="text-sm font-medium tracking-wider uppercase">Kraken Morskoi</span>
+              <Handshake className="h-5 w-5" />
+              <span className="text-sm font-medium tracking-wider uppercase">Свій до своїх</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
@@ -72,10 +72,10 @@ export default function KrakenHome() {
         <div className="kraken-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: Anchor, value: '50+', label: 'Проектов' },
-              { icon: Users, value: '200+', label: 'Участников' },
-              { icon: Compass, value: '15', label: 'Групп' },
-              { icon: BarChart3, value: '95%', label: 'Успешных' },
+              { icon: Briefcase, value: '50+', label: 'Проектів' },
+              { icon: Users, value: '200+', label: 'Учасників' },
+              { icon: Compass, value: '9', label: 'Груп' },
+              { icon: BarChart3, value: '95%', label: 'Успішних' },
             ].map((stat, i) => (
               <div 
                 key={i} 
@@ -107,10 +107,10 @@ export default function KrakenHome() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
         <div className="kraken-container relative z-10 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Готовы к погружению?
+            Готові до співпраці?
           </h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Присоединяйтесь к сообществу и начните свой путь в мире морских проектов
+            Приєднуйтесь до платформи та станьте частиною мережі горизонтальної влади
           </p>
           <Button size="lg" className="kraken-btn-glow" asChild>
             <Link to="/signup">
