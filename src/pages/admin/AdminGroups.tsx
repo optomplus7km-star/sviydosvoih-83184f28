@@ -23,7 +23,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Pencil, Trash2, Loader2, FolderTree, ChevronRight, Users, Image as ImageIcon } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, FolderTree, ChevronRight, Users, Image as ImageIcon, ArrowUp, ArrowDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { GroupImageUpload } from '@/components/admin/GroupImageUpload';
 import { SocialLinksEditor, SocialLink } from '@/components/admin/SocialLinksEditor';
@@ -62,6 +62,7 @@ interface GroupWithRelations {
   is_private: boolean;
   parent_group_id: string | null;
   created_at: string;
+  display_order: number;
   group_images: { id: string; image_url: string; is_thumbnail: boolean; display_order: number }[];
   group_social_links: { id: string; platform: string; url: string; display_order: number }[];
 }
@@ -85,7 +86,7 @@ export default function AdminGroups() {
           group_images(id, image_url, is_thumbnail, display_order),
           group_social_links(id, platform, url, display_order)
         `)
-        .order('name');
+        .order('display_order');
       
       if (error) throw error;
       return data as GroupWithRelations[];
@@ -94,12 +95,12 @@ export default function AdminGroups() {
 
   // Organize groups hierarchically
   const rootGroups = useMemo(() => 
-    groups?.filter(g => !g.parent_group_id) || [], 
+    groups?.filter(g => !g.parent_group_id).sort((a, b) => a.display_order - b.display_order) || [], 
     [groups]
   );
 
   const getSubgroups = (parentId: string) => 
-    groups?.filter(g => g.parent_group_id === parentId) || [];
+    groups?.filter(g => g.parent_group_id === parentId).sort((a, b) => a.display_order - b.display_order) || [];
 
   const getParentName = (parentId: string | null) => {
     if (!parentId) return null;
@@ -222,6 +223,42 @@ export default function AdminGroups() {
     },
     onError: () => {
       toast.error('Ошибка при удалении');
+    },
+  });
+
+  const reorderMutation = useMutation({
+    mutationFn: async ({ groupId, direction, parentId }: { groupId: string; direction: 'up' | 'down'; parentId: string | null }) => {
+      const siblings = parentId 
+        ? groups?.filter(g => g.parent_group_id === parentId).sort((a, b) => a.display_order - b.display_order) || []
+        : rootGroups;
+      
+      const currentIndex = siblings.findIndex(g => g.id === groupId);
+      if (currentIndex === -1) return;
+      
+      const swapIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+      if (swapIndex < 0 || swapIndex >= siblings.length) return;
+      
+      const currentGroup = siblings[currentIndex];
+      const swapGroup = siblings[swapIndex];
+      
+      // Swap display_order values
+      const { error: error1 } = await supabase
+        .from('groups')
+        .update({ display_order: swapGroup.display_order })
+        .eq('id', currentGroup.id);
+      if (error1) throw error1;
+      
+      const { error: error2 } = await supabase
+        .from('groups')
+        .update({ display_order: currentGroup.display_order })
+        .eq('id', swapGroup.id);
+      if (error2) throw error2;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-groups'] });
+    },
+    onError: () => {
+      toast.error('Ошибка при изменении порядка');
     },
   });
 
@@ -475,7 +512,7 @@ export default function AdminGroups() {
               </Button>
             </div>
           ) : (
-            rootGroups.map((group) => (
+            rootGroups.map((group, index) => (
               <GroupTreeItem
                 key={group.id}
                 group={group}
@@ -484,6 +521,13 @@ export default function AdminGroups() {
                 onDelete={(id) => deleteMutation.mutate(id)}
                 onAddSubgroup={(parentId) => openCreate(parentId)}
                 isDeleting={deleteMutation.isPending}
+                onMoveUp={() => reorderMutation.mutate({ groupId: group.id, direction: 'up', parentId: null })}
+                onMoveDown={() => reorderMutation.mutate({ groupId: group.id, direction: 'down', parentId: null })}
+                canMoveUp={index > 0}
+                canMoveDown={index < rootGroups.length - 1}
+                onMoveSubgroupUp={(subId) => reorderMutation.mutate({ groupId: subId, direction: 'up', parentId: group.id })}
+                onMoveSubgroupDown={(subId) => reorderMutation.mutate({ groupId: subId, direction: 'down', parentId: group.id })}
+                isReordering={reorderMutation.isPending}
               />
             ))
           )}
@@ -570,9 +614,30 @@ interface GroupTreeItemProps {
   onDelete: (id: string) => void;
   onAddSubgroup: (parentId: string) => void;
   isDeleting: boolean;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
+  onMoveSubgroupUp: (subId: string) => void;
+  onMoveSubgroupDown: (subId: string) => void;
+  isReordering: boolean;
 }
 
-function GroupTreeItem({ group, subgroups, onEdit, onDelete, onAddSubgroup, isDeleting }: GroupTreeItemProps) {
+function GroupTreeItem({ 
+  group, 
+  subgroups, 
+  onEdit, 
+  onDelete, 
+  onAddSubgroup, 
+  isDeleting,
+  onMoveUp,
+  onMoveDown,
+  canMoveUp,
+  canMoveDown,
+  onMoveSubgroupUp,
+  onMoveSubgroupDown,
+  isReordering
+}: GroupTreeItemProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const imageUrl = group.group_images?.[0]?.image_url || group.image_url;
 
@@ -580,6 +645,30 @@ function GroupTreeItem({ group, subgroups, onEdit, onDelete, onAddSubgroup, isDe
     <div className="border rounded-lg overflow-hidden">
       {/* Parent group */}
       <div className="flex items-center gap-3 p-4 bg-card">
+        {/* Reorder buttons for root groups */}
+        <div className="flex flex-col gap-0.5">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={onMoveUp}
+            disabled={!canMoveUp || isReordering}
+            title="Переместить вверх"
+          >
+            <ArrowUp className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={onMoveDown}
+            disabled={!canMoveDown || isReordering}
+            title="Переместить вниз"
+          >
+            <ArrowDown className="h-4 w-4" />
+          </Button>
+        </div>
+
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
@@ -642,7 +731,7 @@ function GroupTreeItem({ group, subgroups, onEdit, onDelete, onAddSubgroup, isDe
       {/* Subgroups */}
       {isExpanded && subgroups.length > 0 && (
         <div className="border-t bg-muted/30">
-          {subgroups.map((sub) => {
+          {subgroups.map((sub, index) => {
             const subImage = sub.group_images?.[0]?.image_url || sub.image_url;
             const photoCount = sub.group_images?.length || (sub.image_url ? 1 : 0);
             const linkCount = sub.group_social_links?.length || 0;
@@ -650,8 +739,32 @@ function GroupTreeItem({ group, subgroups, onEdit, onDelete, onAddSubgroup, isDe
             return (
               <div
                 key={sub.id}
-                className="flex items-center gap-3 px-4 py-3 pl-14 border-b last:border-b-0 hover:bg-muted/50"
+                className="flex items-center gap-3 px-4 py-3 pl-8 border-b last:border-b-0 hover:bg-muted/50"
               >
+                {/* Reorder buttons for subgroups */}
+                <div className="flex flex-col gap-0.5">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-5 w-5"
+                    onClick={() => onMoveSubgroupUp(sub.id)}
+                    disabled={index === 0 || isReordering}
+                    title="Переместить вверх"
+                  >
+                    <ArrowUp className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-5 w-5"
+                    onClick={() => onMoveSubgroupDown(sub.id)}
+                    disabled={index === subgroups.length - 1 || isReordering}
+                    title="Переместить вниз"
+                  >
+                    <ArrowDown className="h-3 w-3" />
+                  </Button>
+                </div>
+
                 {subImage ? (
                   <img
                     src={subImage}

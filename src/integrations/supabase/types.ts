@@ -204,6 +204,7 @@ export type Database = {
           contact_email: string | null
           created_at: string
           description: string | null
+          display_order: number
           id: string
           image_url: string | null
           is_active: boolean
@@ -218,6 +219,7 @@ export type Database = {
           contact_email?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           image_url?: string | null
           is_active?: boolean
@@ -232,6 +234,7 @@ export type Database = {
           contact_email?: string | null
           created_at?: string
           description?: string | null
+          display_order?: number
           id?: string
           image_url?: string | null
           is_active?: boolean
