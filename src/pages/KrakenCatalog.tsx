@@ -23,8 +23,7 @@ export default function KrakenCatalog() {
         .from('projects')
         .select(`
           *,
-          groups(id, name),
-          project_images(image_url, is_thumbnail)
+          groups(id, name)
         `)
         .eq('is_active', true)
         .order('created_at', { ascending: false });
@@ -45,8 +44,7 @@ export default function KrakenCatalog() {
   );
 
   const getProjectImage = (project: any) => {
-    const thumbnail = project.project_images?.find((img: any) => img.is_thumbnail);
-    return thumbnail?.image_url || project.project_images?.[0]?.image_url || null;
+    return project.images?.[0] || null;
   };
 
   const getDaysLeft = (deadline: string | null) => {
