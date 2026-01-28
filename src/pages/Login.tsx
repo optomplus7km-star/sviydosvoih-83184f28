@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
+import { useTranslation } from '@/lib/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Building2, Loader2 } from 'lucide-react';
+import { Waves, Loader2 } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,7 +29,7 @@ export default function Login() {
     const { error } = await signIn(email, password);
 
     if (error) {
-      setError('Неверный email или пароль');
+      setError(t('auth', 'invalidCredentials'));
       setIsLoading(false);
     } else {
       navigate(from, { replace: true });
@@ -35,14 +37,14 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-muted/30">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-background kraken-waves">
+      <Card className="w-full max-w-md kraken-card border-border/50">
         <CardHeader className="text-center">
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-4">
-            <Building2 className="h-8 w-8 text-primary" />
+            <Waves className="h-10 w-10 text-primary" />
           </Link>
-          <CardTitle className="text-2xl">Вход в аккаунт</CardTitle>
-          <CardDescription>Введите свои данные для входа</CardDescription>
+          <CardTitle className="text-2xl">{t('auth', 'loginTitle')}</CardTitle>
+          <CardDescription>Kraken Morskoi</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
@@ -52,7 +54,7 @@ export default function Login() {
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('auth', 'email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -60,28 +62,30 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="bg-background/50"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Пароль</Label>
+              <Label htmlFor="password">{t('auth', 'password')}</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="bg-background/50"
               />
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full kraken-btn-glow" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Войти
+              {t('nav', 'login')}
             </Button>
             <p className="text-sm text-muted-foreground text-center">
-              Нет аккаунта?{' '}
+              {t('auth', 'noAccount')}{' '}
               <Link to="/signup" className="text-primary hover:underline">
-                Зарегистрируйтесь
+                {t('nav', 'signup')}
               </Link>
             </p>
           </CardFooter>

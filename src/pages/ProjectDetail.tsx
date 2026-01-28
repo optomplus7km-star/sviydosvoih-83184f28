@@ -3,17 +3,18 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/lib/auth';
-import { Layout } from '@/components/layout/Layout';
+import { KrakenLayout } from '@/components/layout/KrakenLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, CheckCircle, Loader2, Building2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Loader2, Building2, Clock, Users } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { differenceInDays } from 'date-fns';
 
 const statusLabels: Record<string, string> = {
   open: 'Открыт для заявок',
@@ -108,39 +109,39 @@ export default function ProjectDetail() {
 
   if (projectLoading) {
     return (
-      <Layout>
-        <div className="civic-container py-12">
+      <KrakenLayout>
+        <div className="kraken-container py-12">
           <Skeleton className="h-8 w-48 mb-4" />
           <Skeleton className="h-12 w-3/4 mb-4" />
           <Skeleton className="h-64 w-full" />
         </div>
-      </Layout>
+      </KrakenLayout>
     );
   }
 
   if (!project) {
     return (
-      <Layout>
-        <div className="civic-container py-12 text-center">
+      <KrakenLayout>
+        <div className="kraken-container py-12 text-center">
           <h1 className="text-2xl font-bold mb-4">Проект не найден</h1>
           <Button asChild>
-            <Link to="/projects">
+            <Link to="/catalog">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              К проектам
+              К каталогу
             </Link>
           </Button>
         </div>
-      </Layout>
+      </KrakenLayout>
     );
   }
 
   return (
-    <Layout>
-      <div className="civic-container py-12">
+    <KrakenLayout>
+      <div className="kraken-container py-12">
         <Button variant="ghost" asChild className="mb-6">
-          <Link to="/projects">
+          <Link to="/catalog">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Назад к проектам
+            Назад к каталогу
           </Link>
         </Button>
 
@@ -149,9 +150,9 @@ export default function ProjectDetail() {
             <div>
               <div className="flex items-start gap-4 mb-4">
                 <h1 className="text-3xl font-bold">{project.title}</h1>
-                <Badge variant="outline" className={statusStyles[project.status]}>
+                <span className={cn('kraken-badge', statusStyles[project.status])}>
                   {statusLabels[project.status]}
-                </Badge>
+                </span>
               </div>
               
               {project.groups && (
@@ -279,6 +280,6 @@ export default function ProjectDetail() {
           </div>
         </div>
       </div>
-    </Layout>
+    </KrakenLayout>
   );
 }
