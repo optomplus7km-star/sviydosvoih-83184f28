@@ -1,4 +1,4 @@
-import { Send, Instagram, Youtube, Twitter, Globe, Mail, MessageCircle, Facebook, Linkedin, Github } from 'lucide-react';
+import { Send, Instagram, Youtube, Twitter, Globe, Mail, MessageCircle, Facebook, Linkedin, Github, Video } from 'lucide-react';
 
 interface SocialIconProps {
   platform: string;
@@ -24,6 +24,8 @@ export function SocialIcon({ platform, className = 'h-5 w-5' }: SocialIconProps)
       return <Linkedin className={className} />;
     case 'github':
       return <Github className={className} />;
+    case 'tiktok':
+      return <Video className={className} />;
     case 'email':
       return <Mail className={className} />;
     case 'whatsapp':
@@ -58,6 +60,8 @@ export function getSocialUrl(platform: string, value: string): string {
       return `https://linkedin.com/in/${value}`;
     case 'github':
       return `https://github.com/${value}`;
+    case 'tiktok':
+      return `https://tiktok.com/@${value.replace('@', '')}`;
     case 'email':
       return `mailto:${value}`;
     case 'whatsapp':

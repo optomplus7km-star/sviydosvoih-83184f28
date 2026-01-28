@@ -12,6 +12,7 @@ import KrakenHome from "./pages/KrakenHome";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CatalogPage from "./pages/CatalogPage";
+import KrakenGroups from "./pages/KrakenGroups";
 import CommunicationPage from "./pages/CommunicationPage";
 import CooperationPage from "./pages/CooperationPage";
 import About from "./pages/About";
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/catalog" element={<CatalogPage />} />
+                <Route path="/groups" element={<KrakenGroups />} />
                 <Route path="/communication" element={<CommunicationPage />} />
                 <Route path="/cooperation" element={<CooperationPage />} />
                 <Route path="/about" element={<About />} />
