@@ -354,14 +354,29 @@ export default function AdminGroups() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Описание</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="description">Описание</Label>
+                  <span className={cn(
+                    "text-xs",
+                    form.description.length > 5000 ? "text-destructive" : 
+                    form.description.length > 4500 ? "text-yellow-600" : "text-muted-foreground"
+                  )}>
+                    {form.description.length}/5000
+                  </span>
+                </div>
                 <Textarea
                   id="description"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  rows={4}
+                  rows={6}
                   placeholder={isSubgroup ? 'Детальное описание подгруппы...' : 'Краткое описание группы'}
+                  maxLength={5000}
                 />
+                {form.description.length > 4500 && (
+                  <p className="text-xs text-yellow-600">
+                    Приближаетесь к лимиту символов
+                  </p>
+                )}
               </div>
             </div>
 
