@@ -6,18 +6,19 @@ import { KrakenLayout } from '@/components/layout/KrakenLayout';
 import { FeaturedProjects } from '@/components/home/FeaturedProjects';
 import { ActivePolls } from '@/components/home/ActivePolls';
 import { LatestNews } from '@/components/home/LatestNews';
-
 export default function KrakenHome() {
-  const { t } = useTranslation();
-
-  return (
-    <KrakenLayout>
+  const {
+    t
+  } = useTranslation();
+  return <KrakenLayout>
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center kraken-waves">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float" style={{
+          animationDelay: '1s'
+        }} />
         </div>
 
         <div className="kraken-container relative z-10 py-20">
@@ -28,18 +29,20 @@ export default function KrakenHome() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
-              {t('hero', 'title').split(' ').map((word, i) => (
-                <span key={i} className={i % 3 === 1 ? 'kraken-gradient-text' : ''}>
+              {t('hero', 'title').split(' ').map((word, i) => <span key={i} className={i % 3 === 1 ? 'kraken-gradient-text' : ''}>
                   {word}{' '}
-                </span>
-              ))}
+                </span>)}
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl animate-fade-in-up" style={{
+            animationDelay: '0.1s'
+          }}>
               {t('hero', 'subtitle')}
             </p>
             
-            <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{
+            animationDelay: '0.2s'
+          }}>
               <Button size="lg" className="kraken-btn-glow gap-2" asChild>
                 <Link to="/catalog">
                   <Compass className="h-5 w-5" />
@@ -59,39 +62,13 @@ export default function KrakenHome() {
         {/* Wave divider */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path 
-              d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" 
-              fill="hsl(var(--card))"
-            />
+            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="hsl(var(--card))" />
           </svg>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="bg-card py-12 border-b border-border/50">
-        <div className="kraken-container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { icon: Briefcase, value: '50+', label: 'Проектів' },
-              { icon: Users, value: '200+', label: 'Учасників' },
-              { icon: Compass, value: '9', label: 'Груп' },
-              { icon: BarChart3, value: '95%', label: 'Успішних' },
-            ].map((stat, i) => (
-              <div 
-                key={i} 
-                className="text-center animate-fade-in-up"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-3">
-                  <stat.icon className="h-6 w-6" />
-                </div>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Active Polls (for authenticated users) */}
       <ActivePolls />
@@ -120,6 +97,5 @@ export default function KrakenHome() {
           </Button>
         </div>
       </section>
-    </KrakenLayout>
-  );
+    </KrakenLayout>;
 }
