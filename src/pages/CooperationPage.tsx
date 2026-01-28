@@ -12,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   ArrowRight, 
-  Users, 
   Calendar, 
   Target,
   CheckCircle2,
@@ -37,12 +36,9 @@ const CooperationPage = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('projects')
-        .select(`
-          *,
-          group:groups(name)
-        `)
+        .select('*')
         .eq('is_active', true)
-        .order('created_at', { ascending: false });
+        .order('display_order');
       if (error) throw error;
       return data;
     },
@@ -80,92 +76,105 @@ const CooperationPage = () => {
   const activeProjects = projects?.filter(p => p.status !== 'closed') || [];
   const completedProjects = projects?.filter(p => p.status === 'closed') || [];
 
-  const renderProjectCard = (project: typeof projects extends (infer T)[] | null | undefined ? T : never) => (
-    <Card key={project.id} className="kraken-card group">
-      <CardHeader>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              {project.status === 'closed' ? (
-                <Badge className="bg-success/10 text-success border-success/20">
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
-                  Виконано
-                </Badge>
-              ) : (
-                <Badge className="bg-primary/10 text-primary border-primary/20">
-                  <Clock className="h-3 w-3 mr-1" />
-                  Активний
-                </Badge>
-              )}
-              {project.group && (
-                <Badge variant="outline" className="font-normal">
-                  <Users className="h-3 w-3 mr-1" />
-                  {project.group.name}
-                </Badge>
-              )}
-            </div>
-            <CardTitle className="text-xl group-hover:text-primary transition-colors">
-              {project.title}
-            </CardTitle>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            {isAdmin && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleToggleStatus(project.id, project.status)}
-                disabled={toggleStatusMutation.isPending}
-                className="gap-2"
-              >
-                <ArrowLeftRight className="h-4 w-4" />
-                {project.status === 'closed' ? 'В активні' : 'У виконані'}
-              </Button>
-            )}
-            <Button 
-              variant="outline" 
-              size="sm" 
-              asChild 
-              className="gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-            >
-              <Link to={`/projects/${project.id}`}>
-                Детальніше
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-        {project.description && (
-          <CardDescription className="mt-2 line-clamp-2">
-            {project.description}
-          </CardDescription>
-        )}
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-          {project.deadline && (
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>До {format(new Date(project.deadline), 'd MMM yyyy', { locale: uk })}</span>
+  const renderProjectCard = (project: typeof projects extends (infer T)[] | null | undefined ? T : never) => {
+    const imageUrl = (project as any).images?.[0];
+    
+    return (
+      <Card key={project.id} className="kraken-card group overflow-hidden">
+        <div className="flex flex-col sm:flex-row">
+          {/* Project Image */}
+          {imageUrl && (
+            <div className="sm:w-48 h-40 sm:h-auto shrink-0">
+              <img
+                src={imageUrl}
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
             </div>
           )}
-          {project.target_participants && (
-            <div className="flex items-center gap-1">
-              <Target className="h-4 w-4" />
-              <span>
-                {project.current_participants || 0}/{project.target_participants} учасників
-              </span>
-            </div>
-          )}
-        </div>
-        {project.requirements && (
-          <div className="mt-3 text-sm">
-            <span className="font-medium text-foreground">Вимоги:</span>
-            <span className="text-muted-foreground ml-2 line-clamp-1">{project.requirements}</span>
+          
+          <div className="flex-1">
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    {project.status === 'closed' ? (
+                      <Badge className="bg-success/10 text-success border-success/20">
+                        <CheckCircle2 className="h-3 w-3 mr-1" />
+                        Виконано
+                      </Badge>
+                    ) : (
+                      <Badge className="bg-primary/10 text-primary border-primary/20">
+                        <Clock className="h-3 w-3 mr-1" />
+                        Активний
+                      </Badge>
+                    )}
+                  </div>
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    {project.title}
+                  </CardTitle>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {isAdmin && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleToggleStatus(project.id, project.status)}
+                      disabled={toggleStatusMutation.isPending}
+                      className="gap-2"
+                    >
+                      <ArrowLeftRight className="h-4 w-4" />
+                      {project.status === 'closed' ? 'В активні' : 'У виконані'}
+                    </Button>
+                  )}
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    asChild 
+                    className="gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    <Link to={`/projects/${project.id}`}>
+                      Детальніше
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              {project.description && (
+                <CardDescription className="mt-2 line-clamp-2">
+                  {project.description}
+                </CardDescription>
+              )}
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                {project.deadline && (
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    <span>До {format(new Date(project.deadline), 'd MMM yyyy', { locale: uk })}</span>
+                  </div>
+                )}
+                {project.target_participants && (
+                  <div className="flex items-center gap-1">
+                    <Target className="h-4 w-4" />
+                    <span>
+                      {project.current_participants || 0}/{project.target_participants} учасників
+                    </span>
+                  </div>
+                )}
+              </div>
+              {project.requirements && (
+                <div className="mt-3 text-sm">
+                  <span className="font-medium text-foreground">Вимоги:</span>
+                  <span className="text-muted-foreground ml-2 line-clamp-1">{project.requirements}</span>
+                </div>
+              )}
+            </CardContent>
           </div>
-        )}
-      </CardContent>
-    </Card>
-  );
+        </div>
+      </Card>
+    );
+  };
 
   return (
     <KrakenLayout>
