@@ -65,15 +65,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Kraken custom colors
-        ocean: {
-          deep: "hsl(222, 47%, 6%)",
-          surface: "hsl(195, 100%, 46%)",
-          dark: "hsl(222, 47%, 12%)",
-        },
-        neon: {
-          cyan: "hsl(185, 100%, 50%)",
-          teal: "hsl(175, 70%, 45%)",
+        // Merejivo custom colors
+        merejivo: {
+          coral: "#FF4D6D",
+          purple: "#A78BFA",
+          deep: "#0F0F15",
+          mid: "#1A1425",
         },
       },
       borderRadius: {
